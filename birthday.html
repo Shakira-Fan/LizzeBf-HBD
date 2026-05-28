@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生日おめでとう</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=Noto+Serif+TC:wght@500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #35423f;
+      --muted: #73807a;
+      --matcha: #8aaa80;
+      --matcha-deep: #5f7c58;
+      --sakura: #eab7bd;
+      --azuki: #b56a6e;
+      --cream: #fffaf0;
+      --paper: #fffdf6;
+      --line: rgba(95, 124, 88, 0.18);
+      --shadow: 0 18px 48px rgba(82, 88, 74, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Zen Maru Gothic", "Noto Serif TC", serif;
+      background:
+        radial-gradient(circle at 14% 16%, rgba(234, 183, 189, 0.24) 0 14rem, transparent 14.2rem),
+        radial-gradient(circle at 86% 4%, rgba(138, 170, 128, 0.18) 0 12rem, transparent 12.2rem),
+        linear-gradient(135deg, #fffdf7 0%, #f9f1e6 44%, #edf5ea 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(53, 66, 63, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(53, 66, 63, 0.025) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.36));
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 96px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0 28px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+    }
+
+    .stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--matcha-deep);
+      font-weight: 700;
+    }
+
+    .stamp::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--sakura);
+      box-shadow: 18px 0 0 #f4d8d0, 9px 12px 0 #dce9d4;
+      margin-right: 18px;
+    }
+
+    .hero {
+      min-height: min(760px, calc(100vh - 28px));
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(290px, 0.82fr);
+      align-items: center;
+      gap: clamp(28px, 5vw, 68px);
+      padding: clamp(22px, 4vw, 52px) 0 38px;
+      position: relative;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--azuki);
+      font-family: "Kiwi Maru", serif;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 620px;
+      font-family: "Noto Serif TC", serif;
+      font-size: clamp(2.7rem, 7vw, 6.2rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+      color: #2e3c38;
+    }
+
+    .jp-title {
+      display: block;
+      color: var(--matcha-deep);
+      font-family: "Kiwi Maru", serif;
+      font-size: clamp(1.2rem, 2.8vw, 2rem);
+      font-weight: 500;
+      margin-top: 18px;
+    }
+
+    .intro {
+      max-width: 620px;
+      margin: 28px 0 0;
+      color: #53615d;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      line-height: 2;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      background: var(--matcha-deep);
+      color: #fffdf7;
+      padding: 13px 22px;
+      font: inherit;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 10px 22px rgba(95, 124, 88, 0.22);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 26px rgba(95, 124, 88, 0.24);
+    }
+
+    .date-chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 246, 0.68);
+      color: var(--muted);
+      padding: 11px 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .cake-scene {
+      align-self: stretch;
+      min-height: 480px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .cake-scene::before {
+      content: "";
+      position: absolute;
+      width: min(460px, 92%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(255, 253, 246, 0.74);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 0 0 16px rgba(234, 183, 189, 0.08), var(--shadow);
+    }
+
+    .cake-frame {
+      width: min(430px, 94%);
+      position: relative;
+      z-index: 1;
+      animation: floatCake 5s ease-in-out infinite;
+    }
+
+    .cake-frame img {
+      border-radius: 28px;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 24px 28px rgba(97, 91, 72, 0.16));
+    }
+
+    .hero-photo {
+      width: min(280px, 58%);
+      margin: 0;
+      padding: 12px 12px 18px;
+      position: absolute;
+      left: clamp(-18px, -3vw, -6px);
+      bottom: clamp(-34px, -4vw, -18px);
+      z-index: 3;
+      border: 1px solid rgba(95, 124, 88, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 253, 246, 0.84);
+      box-shadow: 0 22px 54px rgba(82, 88, 74, 0.2);
+      transform: none;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .hero-photo figcaption {
+      margin-top: 10px;
+      color: var(--azuki);
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    @keyframes floatCake {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-12px) rotate(1deg); }
+    }
+
+    section {
+      padding: clamp(52px, 8vw, 92px) 0 0;
+    }
+
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      color: var(--azuki);
+      font-family: "Kiwi Maru", serif;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+    }
+
+    .section-kicker::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, var(--line), transparent);
+    }
+
+    h2 {
+      margin: 0 0 26px;
+      font-family: "Noto Serif TC", serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .photo-card {
+      --tilt: 0deg;
+      min-height: 420px;
+      border: 1px solid rgba(95, 124, 88, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 253, 246, 0.72);
+      box-shadow: var(--shadow);
+      padding: 10px 10px 16px;
+      transform: rotate(var(--tilt));
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      cursor: zoom-in;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-4px) rotate(0deg);
+      box-shadow: 0 22px 56px rgba(82, 88, 74, 0.18);
+    }
+
+    .photo-card:nth-child(1) { --tilt: -1.3deg; }
+    .photo-card:nth-child(2) { --tilt: 0.9deg; margin-top: 22px; }
+    .photo-card:nth-child(3) { --tilt: -0.6deg; }
+    .photo-card:nth-child(4) { --tilt: 1.2deg; margin-top: 18px; }
+    .photo-card:nth-child(5) { --tilt: 0.8deg; }
+    .photo-card:nth-child(6) { --tilt: -1deg; }
+
+    .photo {
+      height: 330px;
+      border-radius: 6px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(234, 183, 189, 0.24), rgba(220, 233, 212, 0.34)),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.34) 0 10px, transparent 10px 20px);
+      display: grid;
+      place-items: center;
+      color: rgba(53, 66, 63, 0.58);
+      text-align: center;
+      padding: 18px;
+      font-weight: 700;
+      line-height: 1.65;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: rgba(255, 250, 240, 0.76);
+    }
+
+    .photo-card figcaption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(48, 57, 53, 0.54);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    .lightbox.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-panel {
+      width: min(920px, 100%);
+      max-height: min(86vh, 920px);
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 16px;
+      padding: clamp(12px, 2vw, 18px);
+      border: 1px solid rgba(95, 124, 88, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 253, 246, 0.96);
+      box-shadow: 0 28px 80px rgba(32, 40, 37, 0.28);
+      position: relative;
+    }
+
+    .lightbox img {
+      width: 100%;
+      max-height: 68vh;
+      object-fit: contain;
+      border-radius: 6px;
+      background: rgba(255, 250, 240, 0.82);
+    }
+
+    .lightbox-caption {
+      margin: 0;
+      color: #53615d;
+      font-size: clamp(1rem, 2vw, 1.16rem);
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(181, 106, 110, 0.24);
+      border-radius: 999px;
+      background: rgba(255, 253, 246, 0.9);
+      color: var(--azuki);
+      font: inherit;
+      font-size: 1.45rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .letter {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(280px, 1fr);
+      gap: clamp(22px, 5vw, 58px);
+      align-items: start;
+      padding: clamp(28px, 5vw, 52px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(255, 253, 246, 0.88), rgba(255, 250, 240, 0.72)),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(95, 124, 88, 0.08) 31px 32px);
+      box-shadow: var(--shadow);
+    }
+
+    .letter p {
+      margin: 0;
+      color: #52615c;
+      font-size: 1.08rem;
+      line-height: 2.05;
+    }
+
+    .wish-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .wish-list li {
+      border-left: 4px solid var(--sakura);
+      background: rgba(255, 255, 255, 0.42);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      color: #52615c;
+      line-height: 1.7;
+    }
+
+    .hamster-widget {
+      position: fixed;
+      right: clamp(14px, 3vw, 28px);
+      bottom: clamp(14px, 3vw, 28px);
+      z-index: 20;
+      display: grid;
+      gap: 8px;
+      justify-items: center;
+      transform-origin: center bottom;
+      filter: drop-shadow(0 12px 20px rgba(74, 60, 48, 0.16));
+    }
+
+    .hamster-note {
+      max-width: 190px;
+      border: 1px solid rgba(181, 106, 110, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 253, 246, 0.86);
+      color: var(--azuki);
+      padding: 8px 12px;
+      font-size: 0.86rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .hamster {
+      --puff: 0;
+      width: 132px;
+      height: 124px;
+      position: relative;
+      transform: scale(calc(1 + var(--puff) * 0.24));
+      transition: transform 400ms ease;
+    }
+
+    .hamster-face {
+      position: absolute;
+      inset: calc(17px - var(--puff) * 13px) calc(4px - var(--puff) * 15px) calc(0px - var(--puff) * 8px);
+      border-radius: calc(42% + var(--puff) * 18%) calc(42% + var(--puff) * 18%) calc(52% + var(--puff) * 18%) calc(52% + var(--puff) * 18%);
+      background:
+        radial-gradient(circle at 50% 57%, #f8dac0 0 22%, transparent 23%),
+        radial-gradient(circle at 26% 61%, #efbd7d 0 30%, transparent 31%),
+        radial-gradient(circle at 74% 61%, #efbd7d 0 30%, transparent 31%),
+        linear-gradient(180deg, #d99652 0%, #e8b36f 45%, #f3c991 100%);
+      border: 3px solid #8f6541;
+      box-shadow:
+        inset 0 -12px 0 rgba(142, 87, 49, 0.1),
+        inset 12px 2px 0 rgba(255, 226, 190, 0.16),
+        inset -12px 2px 0 rgba(129, 78, 42, 0.08);
+      transition: inset 400ms ease, border-radius 400ms ease;
+      overflow: visible;
+    }
+
+    .hamster-face::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 48px;
+      width: 42px;
+      height: 34px;
+      border-radius: 48% 48% 55% 55%;
+      background: rgba(255, 232, 203, 0.78);
+      border: 0;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .hamster-face::after {
+      display: none;
+    }
+
+    .ear {
+      position: absolute;
+      top: 4px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #c9874e;
+      border: 3px solid #7a5638;
+      z-index: 0;
+    }
+
+    .ear::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border-radius: inherit;
+      background: #f3bea4;
+    }
+
+    .ear.left {
+      left: 18px;
+    }
+
+    .ear.right {
+      right: 18px;
+      transform: none;
+    }
+
+    .eye {
+      position: absolute;
+      top: 43px;
+      width: 12px;
+      height: 16px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 48% 32%, #fff 0 3px, transparent 3.5px),
+        #2f211b;
+      box-shadow: 0 0 0 2px rgba(47, 33, 27, 0.08);
+      z-index: 2;
+    }
+
+    .eye.left { left: calc(34px - var(--puff) * 6px); }
+    .eye.right { right: calc(34px - var(--puff) * 6px); }
+
+    .cheek {
+      position: absolute;
+      top: 61px;
+      width: calc(36px + var(--puff) * 22px);
+      height: calc(25px + var(--puff) * 18px);
+      border-radius: 50%;
+      background: #f6aaa7;
+      opacity: 0.72;
+      transition: width 400ms ease, height 400ms ease;
+      z-index: 1;
+    }
+
+    .cheek.left { left: calc(10px - var(--puff) * 15px); }
+    .cheek.right { right: calc(10px - var(--puff) * 15px); }
+
+    .nose {
+      position: absolute;
+      top: 56px;
+      left: 50%;
+      width: 13px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f0a9a0;
+      border: 2px solid #8d5949;
+      transform: translateX(-50%);
+      z-index: 4;
+    }
+
+    .mouth {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      width: 20px;
+      height: 8px;
+      border-bottom: 2px solid #5d3b2c;
+      border-radius: 0 0 18px 18px;
+      transform: translateX(-50%);
+      z-index: 4;
+    }
+
+    .mouth::before,
+    .mouth::after {
+      display: none;
+    }
+
+    .seed {
+      position: absolute;
+      display: none;
+    }
+
+    footer {
+      padding: 72px 0 0;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .letter {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .cake-scene {
+        min-height: 390px;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-photo {
+        width: min(240px, 54%);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(100% - 22px, 1120px);
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .button,
+      .date-chip {
+        text-align: center;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .cake-frame {
+        width: min(320px, 88%);
+      }
+
+      .hero-photo {
+        width: min(300px, 100%);
+        margin-top: -18px;
+        position: relative;
+        left: auto;
+        bottom: auto;
+      }
+
+      .photo-card,
+      .photo-card:nth-child(n) {
+        min-height: 0;
+        margin-top: 0;
+        transform: none;
+      }
+
+      .hamster-widget {
+        transform: scale(0.86);
+        transform-origin: right bottom;
+      }
+
+      .hamster-note {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="nav" aria-label="頁面導覽">
+      <span class="stamp">Birthday Letter</span>
+      <span>made with cake, matcha, and tiny patience</span>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">For my favorite person</p>
+        <h1>
+          生日快樂
+          <span class="jp-title">お誕生日おめでとう</span>
+        </h1>
+        <p class="intro">
+          今天把好多喜歡你的瞬間收在這裡，像一封慢慢展開的生日信。
+          願你接下來的每一天都有舒服的光、好吃的東西，還有我繼續在旁邊亂入陪你笑。
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#memories">看我們的照片</a>
+          <span class="date-chip">36th birthday / 2026.07.06</span>
+        </div>
+      </div>
+
+      <div class="cake-scene" aria-label="生日蛋糕插畫">
+        <div class="cake-frame">
+          <img src="birthday-cake.png" alt="草莓、櫻花與抹茶色點綴的大生日蛋糕">
+        </div>
+      </div>
+    </header>
+
+    <section id="memories" aria-labelledby="memory-title">
+      <p class="section-kicker">Our little moments</p>
+      <h2 id="memory-title">好多張合照，都是我私心珍藏</h2>
+      <div class="gallery">
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811466_0.jpg">旋轉木馬旁的合照</div>
+          <figcaption>亮晶晶的背景很熱鬧，但最可愛的是我們靠在一起。</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811467_0.jpg">一起穿白色上衣的合照</div>
+          <figcaption>同框的時候就很有日常感，像剛好被春天收進照片裡。</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811468_0.jpg">一起搞怪的合照</div>
+          <figcaption>我很喜歡這種不用太正經、但很像我們的瞬間。</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811469_0.jpg">喝飲料的午後</div>
+          <figcaption>有樹影、有飲料，還有剛剛好的溫柔光線。</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811472_0.jpg">草地旁的合照</div>
+          <figcaption>一起出門、一起發呆、一起把日子過成小旅行。</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811473_0.jpg">靠很近的可愛自拍</div>
+          <figcaption>近到好像可以把那天的心情也一起留下來。</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811474_0.jpg">餐桌旁的合照</div>
+          <figcaption>平凡吃飯也很好，因為是跟你一起。</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811478_0.jpg">彩色牆前的合照</div>
+          <figcaption>背景很繽紛，你在旁邊更像我的主角濾鏡。</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="photo" data-src="pictures/S__113811479_0.jpg">大草地前的合照</div>
+          <figcaption>風景很大，但照片裡最想記住的還是你。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section aria-labelledby="letter-title">
+      <div class="letter">
+        <div>
+          <p class="section-kicker">A soft note</p>
+          <h2 id="letter-title">想給你的生日願望</h2>
+        </div>
+        <div>
+          <p>
+            希望你可以一直做自己喜歡的事，也被生活溫柔地接住。
+            辛苦的時候我會在，想耍廢的時候我也會在，想吃蛋糕的時候我更會在。
+          </p>
+          <ul class="wish-list" aria-label="生日願望清單">
+            <li>願你每天都有一點點剛剛好的幸運。</li>
+            <li>願你的笑容被好好保管，壞心情都可以快快退散。</li>
+            <li>願我們下一歲也一起拍更多照片、吃更多好吃的。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Happy birthday. Stay soft, stay bright, stay wonderfully you.</p>
+    </footer>
+  </main>
+
+  <aside class="hamster-widget" aria-live="polite">
+    <div class="hamster-note" id="hamsterNote">陪越久，臉越圓：0%</div>
+    <div class="hamster" id="hamster" aria-label="會慢慢變胖的可愛倉鼠">
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+      <div class="hamster-face">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="cheek left"></div>
+        <div class="cheek right"></div>
+        <div class="nose"></div>
+        <div class="mouth"></div>
+        <div class="seed"></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="lightbox" id="photoLightbox" aria-hidden="true">
+    <div class="lightbox-panel" role="dialog" aria-modal="true" aria-label="放大照片">
+      <button class="lightbox-close" type="button" aria-label="關閉">x</button>
+      <img id="lightboxImage" src="" alt="">
+      <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+  </div>
+
+  <script>
+    const photoSlots = document.querySelectorAll("[data-src]");
+
+    photoSlots.forEach((slot) => {
+      const fileName = slot.dataset.src;
+      const img = new Image();
+      img.alt = slot.textContent.replace(/\s+/g, " ").trim();
+      img.onload = () => {
+        slot.replaceChildren(img);
+      };
+      img.src = fileName;
+    });
+
+    const lightbox = document.getElementById("photoLightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const lightboxCaption = document.getElementById("lightboxCaption");
+    const closeLightboxButton = lightbox.querySelector(".lightbox-close");
+    const photoCards = document.querySelectorAll(".photo-card");
+
+    function openLightbox(card) {
+      const photo = card.querySelector(".photo");
+      const caption = card.querySelector("figcaption");
+      const image = photo.querySelector("img");
+
+      if (!image) return;
+
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt || photo.textContent.trim();
+      lightboxCaption.textContent = caption ? caption.textContent.trim() : "";
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+      closeLightboxButton.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImage.src = "";
+    }
+
+    photoCards.forEach((card) => {
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", "放大照片");
+      card.addEventListener("click", () => openLightbox(card));
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openLightbox(card);
+        }
+      });
+    });
+
+    closeLightboxButton.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+        closeLightbox();
+      }
+    });
+
+    const hamster = document.getElementById("hamster");
+    const hamsterNote = document.getElementById("hamsterNote");
+    const start = Date.now();
+    const growDuration = 30000;
+
+    function updateHamster() {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(elapsed / growDuration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      hamster.style.setProperty("--puff", eased.toFixed(3));
+      hamsterNote.textContent = progress >= 1
+        ? "圓滾滾完成，壽星請收下"
+        : `陪越久，臉越圓：${Math.round(progress * 100)}%`;
+
+      if (progress < 1) {
+        requestAnimationFrame(updateHamster);
+      }
+    }
+
+    updateHamster();
+  </script>
+</body>
+</html>
