@@ -173,12 +173,23 @@
     }
 
     .date-chip {
+      appearance: none;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: rgba(255, 253, 246, 0.68);
       color: var(--muted);
       padding: 11px 16px;
+      font: inherit;
       backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .date-chip:hover,
+    .date-chip:focus-visible {
+      border-color: rgba(181, 106, 110, 0.34);
+      color: var(--azuki);
+      transform: translateY(-1px);
     }
 
     .cake-scene {
@@ -404,6 +415,58 @@
       cursor: pointer;
     }
 
+    .letter-lightbox {
+      z-index: 70;
+    }
+
+    .letter-panel {
+      width: min(760px, 100%);
+      max-height: min(86vh, 860px);
+      display: block;
+      padding: clamp(24px, 5vw, 46px);
+      overflow: auto;
+      background:
+        linear-gradient(120deg, rgba(255, 253, 246, 0.98), rgba(255, 250, 240, 0.94)),
+        repeating-linear-gradient(0deg, transparent 0 33px, rgba(95, 124, 88, 0.07) 33px 34px);
+    }
+
+    .letter-lightbox.is-open .letter-panel {
+      animation: letterPop 220ms ease both;
+    }
+
+    .letter-dialog-title {
+      margin: 0 0 20px;
+      color: var(--matcha-deep);
+      font-family: "Noto Serif TC", serif;
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      line-height: 1.25;
+    }
+
+    .letter-content {
+      display: grid;
+      gap: 18px;
+      color: #4f5d59;
+      font-family: "Noto Serif TC", serif;
+      font-size: clamp(1rem, 2.2vw, 1.1rem);
+      line-height: 2.05;
+    }
+
+    .letter-content p {
+      margin: 0;
+      text-align: justify;
+    }
+
+    @keyframes letterPop {
+      from { transform: translateY(14px) scale(0.98); }
+      to { transform: translateY(0) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .letter-lightbox.is-open .letter-panel {
+        animation: none;
+      }
+    }
+
     .letter {
       display: grid;
       grid-template-columns: minmax(0, 0.8fr) minmax(280px, 1fr);
@@ -445,10 +508,10 @@
     .hamster-widget {
       position: fixed;
       right: clamp(14px, 3vw, 28px);
-      bottom: clamp(14px, 3vw, 28px);
+      bottom: clamp(30px, 4vw, 46px);
       z-index: 20;
       display: grid;
-      gap: 8px;
+      gap: 30px;
       justify-items: center;
       transform-origin: center bottom;
       filter: drop-shadow(0 12px 20px rgba(74, 60, 48, 0.16));
@@ -464,6 +527,8 @@
       font-size: 0.86rem;
       text-align: center;
       backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 8;
     }
 
     .hamster {
@@ -473,6 +538,73 @@
       position: relative;
       transform: scale(calc(1 + var(--puff) * 0.24));
       transition: transform 400ms ease;
+    }
+
+    .god-hat {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      width: 68px;
+      height: 46px;
+      transform: translateX(-50%);
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .god-hat::before,
+    .god-hat::after {
+      display: none;
+    }
+
+    .hat-dome {
+      position: absolute;
+      left: 8px;
+      top: 3px;
+      width: 52px;
+      height: 34px;
+      border-radius: 48% 48% 36% 36%;
+      background:
+        radial-gradient(circle at 50% 0, #ffd66d 0 4px, transparent 5px),
+        linear-gradient(90deg, transparent 30%, rgba(255, 214, 109, 0.28) 31% 34%, transparent 35% 64%, rgba(92, 0, 0, 0.18) 65% 68%, transparent 69%),
+        linear-gradient(180deg, #ff5c4e 0%, #d81f22 54%, #9e1518 100%);
+      border: 2px solid #a46b18;
+      border-bottom: 0;
+      box-shadow: inset 10px 0 0 rgba(255, 207, 123, 0.12), inset -8px 0 0 rgba(95, 0, 0, 0.14);
+    }
+
+    .hat-band {
+      position: absolute;
+      left: 1px;
+      top: 29px;
+      width: 66px;
+      height: 17px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 50% 50%, #32b882 0 5px, #08764f 6px 7px, transparent 8px),
+        linear-gradient(180deg, #ffe58b 0%, #d89a21 52%, #a96a16 100%);
+      border: 2px solid #9b6215;
+      box-shadow: inset 0 3px 0 rgba(255, 247, 184, 0.52), 0 5px 8px rgba(108, 69, 19, 0.18);
+    }
+
+    .hat-band::before,
+    .hat-band::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      width: 13px;
+      height: 5px;
+      border-radius: 999px;
+      border-top: 2px solid rgba(255, 246, 167, 0.88);
+    }
+
+    .hat-band::before {
+      left: 11px;
+      transform: rotate(-16deg);
+    }
+
+    .hat-band::after {
+      right: 11px;
+      transform: rotate(16deg);
     }
 
     .hamster-face {
@@ -513,7 +645,7 @@
 
     .ear {
       position: absolute;
-      top: 4px;
+      top: 8px;
       width: 34px;
       height: 34px;
       border-radius: 50%;
@@ -531,11 +663,11 @@
     }
 
     .ear.left {
-      left: 18px;
+      left: -2px;
     }
 
     .ear.right {
-      right: 18px;
+      right: -2px;
       transform: none;
     }
 
@@ -606,10 +738,81 @@
     }
 
     footer {
+      position: relative;
+      min-height: 260px;
       padding: 72px 0 0;
       color: var(--muted);
       text-align: center;
       line-height: 1.8;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    footer p {
+      position: relative;
+      z-index: 5;
+    }
+
+    .money-rain {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bill {
+      position: absolute;
+      top: -52px;
+      left: var(--x);
+      width: 58px;
+      height: 28px;
+      border: 2px solid #4f8b58;
+      border-radius: 5px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.82) 0 6px, transparent 7px),
+        linear-gradient(90deg, rgba(47, 117, 66, 0.16) 0 14%, transparent 15% 85%, rgba(47, 117, 66, 0.16) 86% 100%),
+        linear-gradient(135deg, #e8f7d8, #b8df9a);
+      color: #2f7142;
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      opacity: 0.88;
+      transform: rotate(var(--r));
+      animation: fallMoney var(--d) linear infinite;
+      animation-delay: var(--delay);
+      box-shadow: 0 8px 12px rgba(48, 93, 53, 0.14);
+    }
+
+    .coin-pile {
+      position: absolute;
+      left: 50%;
+      bottom: -26px;
+      width: min(1120px, 118%);
+      transform: translateX(-50%);
+      z-index: 2;
+      pointer-events: none;
+      display: block;
+      filter: drop-shadow(0 10px 18px rgba(166, 103, 19, 0.18));
+    }
+
+    @keyframes fallMoney {
+      0% {
+        translate: 0 -24px;
+        rotate: 0deg;
+      }
+      100% {
+        translate: var(--drift) 340px;
+        rotate: 360deg;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bill {
+        animation: none;
+        top: var(--still-y);
+      }
     }
 
     @media (max-width: 860px) {
@@ -709,13 +912,13 @@
         </p>
         <div class="hero-actions">
           <a class="button" href="#memories">看我們的照片</a>
-          <span class="date-chip">36th birthday / 2026.07.06</span>
+          <button class="date-chip" id="openLetterButton" type="button">36th birthday / 2026.07.06</button>
         </div>
       </div>
 
       <div class="cake-scene" aria-label="生日蛋糕插畫">
         <div class="cake-frame">
-          <img src="birthday-cake.png" alt="草莓、櫻花與抹茶色點綴的大生日蛋糕">
+          <img src="birthday-cake.png" alt="提拉米蘇生日蛋糕插畫">
         </div>
       </div>
     </header>
@@ -784,13 +987,26 @@
     </section>
 
     <footer>
+      <div class="money-rain" aria-hidden="true">
+        <span class="bill" style="--x: 8%; --r: -12deg; --d: 8s; --delay: -1s; --drift: 28px; --still-y: 20px;">$</span>
+        <span class="bill" style="--x: 22%; --r: 9deg; --d: 9.5s; --delay: -4s; --drift: -34px; --still-y: 52px;">$</span>
+        <span class="bill" style="--x: 39%; --r: -6deg; --d: 7.5s; --delay: -2.5s; --drift: 24px; --still-y: 34px;">$</span>
+        <span class="bill" style="--x: 58%; --r: 14deg; --d: 10s; --delay: -5.5s; --drift: -28px; --still-y: 70px;">$</span>
+        <span class="bill" style="--x: 76%; --r: -10deg; --d: 8.8s; --delay: -3s; --drift: 36px; --still-y: 28px;">$</span>
+        <span class="bill" style="--x: 90%; --r: 7deg; --d: 11s; --delay: -6.5s; --drift: -22px; --still-y: 62px;">$</span>
+      </div>
       <p>Happy birthday. Stay soft, stay bright, stay wonderfully you.</p>
+      <img class="coin-pile" src="footer-coins.png" alt="" aria-hidden="true">
     </footer>
   </main>
 
   <aside class="hamster-widget" aria-live="polite">
     <div class="hamster-note" id="hamsterNote">陪越久，臉越圓：0%</div>
-    <div class="hamster" id="hamster" aria-label="會慢慢變胖的可愛倉鼠">
+    <div class="hamster" id="hamster" aria-label="戴著財神帽、會慢慢變胖的可愛倉鼠">
+      <div class="god-hat" aria-hidden="true">
+        <div class="hat-dome"></div>
+        <div class="hat-band"></div>
+      </div>
       <div class="ear left"></div>
       <div class="ear right"></div>
       <div class="hamster-face">
@@ -811,6 +1027,19 @@
       <img id="lightboxImage" src="" alt="">
       <p class="lightbox-caption" id="lightboxCaption"></p>
     </div>
+  </div>
+
+  <div class="lightbox letter-lightbox" id="letterLightbox" aria-hidden="true">
+    <article class="lightbox-panel letter-panel" role="dialog" aria-modal="true" aria-labelledby="letterDialogTitle">
+      <button class="lightbox-close" id="closeLetterButton" type="button" aria-label="關閉">x</button>
+      <h2 class="letter-dialog-title" id="letterDialogTitle">給親愛的佳展</h2>
+      <div class="letter-content">
+        <p>世界上最極致的浪漫，往往不誕生在華麗的餐廳或遙遠的風景裡。佳餚再美，都不及有你陪我吃的一碗家常。在那些平凡的夜晚，我們褪去白天的疲憊，坐在桌邊，吃著最簡單的飯菜、聊著最瑣碎的日常。哪怕生活偶爾給了我們不及格的考卷，或者有些人在用緊繃的規矩過日子，但在我們這裡，一口飯、一聲歡笑，就是最真實的滋味。只要有你在對面，再平凡的食物，都市口中幸福的花。</p>
+        <p>這半年來的點點滴滴，就像一場溫柔的春雨，悄悄在我們心底紮了根。梓木繁茂，恰似這段感情生機盎然的模樣。 我們一起適應新生活、一起為了孩子努力、一起在無數個深夜拉著手深聊。那些看似不易的關卡，非但沒有消磨我們，反而讓我們的愛像繁茂的樹木一樣，在風雨過後長得更加強壯、更加生機勃勃。</p>
+        <p>我知道你是一個有肩膀、有抱負的人，在職場上、在學業上，你總是拼盡全力地想去開拓、去證明自己。在那些你需要展翅高飛的路上，謝謝你給我最踏實的肩膀。 謝謝你總是把我放在心上最安全的位置。哪怕外面的世界偶爾有風浪、有些不公不義的委屈，只要我們一起，就什麼都不用怕。</p>
+        <p>你從來都不是一個人，你付出的所有努力我都懂。在未來的綺麗的未來裡，有我陪你。 那些今年還沒解鎖的成就，我們就一步一步、踏踏實實地去實現。接下來的無數個半年，我會一直牽著你的手，當你最溫暖的避風港。我們要一起，把這個簡單的生活，過得閃閃發亮。</p>
+      </div>
+    </article>
   </div>
 
   <script>
@@ -879,24 +1108,62 @@
       }
     });
 
+    const openLetterButton = document.getElementById("openLetterButton");
+    const letterLightbox = document.getElementById("letterLightbox");
+    const closeLetterButton = document.getElementById("closeLetterButton");
+
+    function openLetter() {
+      letterLightbox.classList.add("is-open");
+      letterLightbox.setAttribute("aria-hidden", "false");
+      closeLetterButton.focus();
+    }
+
+    function closeLetter() {
+      letterLightbox.classList.remove("is-open");
+      letterLightbox.setAttribute("aria-hidden", "true");
+      openLetterButton.focus();
+    }
+
+    openLetterButton.addEventListener("click", openLetter);
+    closeLetterButton.addEventListener("click", closeLetter);
+    letterLightbox.addEventListener("click", (event) => {
+      if (event.target === letterLightbox) {
+        closeLetter();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && letterLightbox.classList.contains("is-open")) {
+        closeLetter();
+      }
+    });
+
     const hamster = document.getElementById("hamster");
     const hamsterNote = document.getElementById("hamsterNote");
     const start = Date.now();
     const growDuration = 30000;
+    let hamsterFinished = false;
 
     function updateHamster() {
+      if (hamsterFinished) {
+        return;
+      }
+
       const elapsed = Date.now() - start;
       const progress = Math.min(elapsed / growDuration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
 
       hamster.style.setProperty("--puff", eased.toFixed(3));
-      hamsterNote.textContent = progress >= 1
-        ? "圓滾滾完成，壽星請收下"
-        : `陪越久，臉越圓：${Math.round(progress * 100)}%`;
+      hamsterNote.textContent = `陪越久，臉越圓：${Math.round(progress * 100)}%`;
 
-      if (progress < 1) {
-        requestAnimationFrame(updateHamster);
+      if (progress >= 1) {
+        hamsterFinished = true;
+        hamster.style.setProperty("--puff", "1");
+        hamsterNote.textContent = "陪越久，臉越圓：100%";
+        return;
       }
+
+      requestAnimationFrame(updateHamster);
     }
 
     updateHamster();
