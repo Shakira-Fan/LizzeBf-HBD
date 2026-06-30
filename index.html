@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="trump-tower-icon.png">
   <title>展哥生日快樂!!</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,6 +83,15 @@
       gap: 8px;
       color: var(--matcha-deep);
       font-weight: 700;
+    }
+
+    .stamp-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(95, 124, 88, 0.16);
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 6px 14px rgba(82, 88, 74, 0.14);
     }
 
     .stamp::before {
@@ -401,18 +411,31 @@
 
     .lightbox-close {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 38px;
-      height: 38px;
-      border: 1px solid rgba(181, 106, 110, 0.24);
+      top: 14px;
+      right: 14px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      background: rgba(255, 253, 246, 0.9);
-      color: var(--azuki);
+      background: rgba(255, 253, 246, 0.94);
+      color: var(--ink);
       font: inherit;
-      font-size: 1.45rem;
+      font-family: Arial, sans-serif;
+      font-size: 1.8rem;
+      font-weight: 400;
       line-height: 1;
+      box-shadow: 0 10px 24px rgba(82, 88, 74, 0.16);
       cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-close:focus-visible {
+      outline: 0;
+      transform: scale(1.12);
+      box-shadow: 0 14px 28px rgba(82, 88, 74, 0.2);
     }
 
     .letter-lightbox {
@@ -739,8 +762,9 @@
 
     footer {
       position: relative;
-      min-height: 260px;
-      padding: 72px 0 0;
+      min-height: 360px;
+      margin-top: clamp(72px, 11vw, 140px);
+      padding: 108px 0 0;
       color: var(--muted);
       text-align: center;
       line-height: 1.8;
@@ -751,6 +775,15 @@
     footer p {
       position: relative;
       z-index: 5;
+      margin: 0;
+    }
+
+    .text-white {
+      color: var(--ink);
+      font-size: clamp(1.35rem, 3.5vw, 2.25rem);
+      font-weight: 700;
+      line-height: 1.45;
+      text-shadow: 0 2px 10px rgba(255, 253, 246, 0.7);
     }
 
     .money-rain {
@@ -788,7 +821,7 @@
     .coin-pile {
       position: absolute;
       left: 50%;
-      bottom: -26px;
+      bottom: 0;
       width: min(1120px, 118%);
       transform: translateX(-50%);
       z-index: 2;
@@ -895,16 +928,18 @@
 <body>
   <main class="page">
     <nav class="nav" aria-label="頁面導覽">
-      <span class="stamp">Birthday Letter</span>
-      <span>made with cake, matcha, and tiny patience</span>
+      <span class="stamp">
+        Birthday Letter
+        <img class="stamp-icon" src="trump-tower-icon.png" alt="金色高樓小圖示">
+      </span>
     </nav>
 
     <header class="hero">
       <div class="hero-copy">
         <p class="eyebrow">For my favorite person</p>
         <h1>
-          生日快樂
-          <span class="jp-title">お誕生日おめでとう</span>
+          狂賀 展哥生辰快樂!!
+          <span class="jp-title">展哥、お誕生日おめでとう!!</span>
         </h1>
         <p class="intro">
           今天把好多喜歡你的瞬間收在這裡，像一封慢慢展開的生日信。
@@ -995,7 +1030,7 @@
         <span class="bill" style="--x: 76%; --r: -10deg; --d: 8.8s; --delay: -3s; --drift: 36px; --still-y: 28px;">$</span>
         <span class="bill" style="--x: 90%; --r: 7deg; --d: 11s; --delay: -6.5s; --drift: -22px; --still-y: 62px;">$</span>
       </div>
-      <p>Happy birthday. Stay soft, stay bright, stay wonderfully you.</p>
+      <p class="text-white">Happy birthday. Stay soft, stay bright, stay wonderfully you.</p>
       <img class="coin-pile" src="footer-coins.png" alt="" aria-hidden="true">
     </footer>
   </main>
@@ -1023,7 +1058,7 @@
 
   <div class="lightbox" id="photoLightbox" aria-hidden="true">
     <div class="lightbox-panel" role="dialog" aria-modal="true" aria-label="放大照片">
-      <button class="lightbox-close" type="button" aria-label="關閉">x</button>
+      <button class="lightbox-close" type="button" aria-label="關閉">&times;</button>
       <img id="lightboxImage" src="" alt="">
       <p class="lightbox-caption" id="lightboxCaption"></p>
     </div>
@@ -1031,7 +1066,7 @@
 
   <div class="lightbox letter-lightbox" id="letterLightbox" aria-hidden="true">
     <article class="lightbox-panel letter-panel" role="dialog" aria-modal="true" aria-labelledby="letterDialogTitle">
-      <button class="lightbox-close" id="closeLetterButton" type="button" aria-label="關閉">x</button>
+      <button class="lightbox-close" id="closeLetterButton" type="button" aria-label="關閉">&times;</button>
       <h2 class="letter-dialog-title" id="letterDialogTitle">給親愛的佳展</h2>
       <div class="letter-content">
         <p>世界上最極致的浪漫，往往不誕生在華麗的餐廳或遙遠的風景裡。佳餚再美，都不及有你陪我吃的一碗家常。在那些平凡的夜晚，我們褪去白天的疲憊，坐在桌邊，吃著最簡單的飯菜、聊著最瑣碎的日常。哪怕生活偶爾給了我們不及格的考卷，或者有些人在用緊繃的規矩過日子，但在我們這裡，一口飯、一聲歡笑，就是最真實的滋味。只要有你在對面，再平凡的食物，都市口中幸福的花。</p>
